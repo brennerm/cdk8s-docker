@@ -1,0 +1,11 @@
+FROM node:alpine
+
+RUN yarn global add cdk8s-cli && yarn cache clean
+RUN mkdir /files 
+WORKDIR /files
+
+ADD entrypoint-typescript.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+
+ENTRYPOINT ["/entrypoint.sh"]
