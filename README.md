@@ -6,3 +6,6 @@ Synthesizing works similar but instead of mounting an empty directory you need t
 
 ## Synthezising Python code
 To be able to synthesize Python cdk8s code you need to use the _brennerm/cdk8s:python_ image. It contains additional dependencies like Python 3.7 and pipenv.
+
+## Setting the owner of generated files
+No matter if you are initializing a new app or synthesizing your manifests, all generated files will have a root ownership afterwards. This happens cause cdk8s is being executed as root to be able to read and write files from and to the volume due to [this issue](https://github.com/moby/moby/issues/2259). To fix this you can pass the `-u uid=$(id -u)` parameter to the `docker run command`. Tried to prevent executing as root but currently it does not seem possible while keeping a good user experience of the resulting image.

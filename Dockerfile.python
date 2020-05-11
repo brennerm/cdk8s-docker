@@ -7,6 +7,4 @@ WORKDIR /files
 RUN pip install pipenv
 
 ADD entrypoint-python.sh /entrypoint.sh
-
-
 ENTRYPOINT ["/entrypoint.sh"]
