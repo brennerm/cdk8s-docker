@@ -6,7 +6,15 @@ docker:
     - docker:dind
   script:
     - docker build -t $DOCKER_HUB_USER/cdk8s -f Dockerfile.typescript .
+    - mkdir test-ts && cd test-ts
+    - docker run -v`pwd`:/files $DOCKER_HUB_USER/cdk8s init typescript-app
+    - docker run -v`pwd`:/files $DOCKER_HUB_USER/cdk8s synth
+    - cd ..
     - docker build -t $DOCKER_HUB_USER/cdk8s:python -f Dockerfile.python .
+    - mkdir test-python && cd test-python
+    - docker run -v`pwd`:/files $DOCKER_HUB_USER/cdk8s:python init python-app
+    - docker run -v`pwd`:/files $DOCKER_HUB_USER/cdk8s:python synth
+    - cd ..
     - docker login -u $DOCKER_HUB_USER -p $DOCKER_HUB_PASSWORD
     - docker push $DOCKER_HUB_USER/cdk8s
     - docker push $DOCKER_HUB_USER/cdk8s:python
