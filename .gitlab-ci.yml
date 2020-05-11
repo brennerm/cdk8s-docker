@@ -1,6 +1,9 @@
 docker:
   only:
     - master 
+  image: docker
+  services:
+    - docker:dind
   script:
     - docker build -t brennerm/cdk8s -f Dockerfile.typescript .
     - docker build -t brennerm/cdk8s-python -f Dockerfile.python .
